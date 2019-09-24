@@ -1,29 +1,25 @@
 (ns
   ^{:author "AlaskanEmily"
-        :doc "Titania map editor UI"}
-  titania-map
+        :doc "Shared UI Components of Rogue Tyler"}
+  rogue-ui-utils
   (:require [clojure.core.reducers :as reduce])
   (:import
     (java.awt Frame Panel FlowLayout Image ScrollPane Canvas Color Dimension)
     (java.awt.event WindowAdapter WindowEvent MouseAdapter)
     (java.util.concurrent.atomic AtomicInteger)))
 
-; Java interface to get the tile identifier from an image selection widget.
-; must be an interface and not a protocol to work with proxy.
-(definterface TileIdentifier
-  (^int getTileIdentifier []))
-
 (definterface Selectable
-  (^boolean getState [])
-  (^boolean setState []))
+  (^boolean getState[])
+  (^boolean setState[]))
 
-; Implements the tile images in the tile chooser window.
-(defn tile-image [selector hover id image w h]
+; Implements a panel which acts like a radio button, of which only one in a
+; group can be selected at once.
+(defn image-tile [selector hover scale id image w h]
   (let [
-      scaled-w (* w 2)
-      scaled-h (* h 2)
+      scaled-w (* w scale)
+      scaled-h (* h scale)
       scaled-image (.getScaledInstance image scaled-w scaled-h Image/SCALE_FAST)
-      check-box (proxy [Canvas TileIdentifier Selectable] []
+      check-box (proxy [Canvas Selectable] []
         ; Pass the tile identifier through.
         (getTileIdentifier [] id)
         
@@ -73,12 +69,12 @@
     check-box))
 
 ; reducer to use to generate the tile ui
-(defn add-tile-image [panel selector hover w h index image]
-  (.add panel (tile-image selector hover index image w h))
+(defn add-image-tile [panel selector hover w h index image]
+  (.add panel (image-tile selector hover 2 index image w h))
   (+ 1 index))
 
 ; Creates a tile-chooser frame. This has its own scrolling and selection system.
-(defn tile-chooser [images image-w image-h x y w h]
+(defn image-chooser [images image-w image-h x y w h]
   (let [
       scroll-pane (new ScrollPane)
       panel (new Panel)
@@ -101,7 +97,7 @@
         (.setBounds 4 4 w h)
         (.setLayout flow-layout)))
     ; Add the tile images
-    (reduce/reduce (partial add-tile-image panel selector hover image-w image-h) 0 images)
+    (reduce/reduce (partial add-image-tile panel selector hover image-w image-h) 0 images)
     
     ; Setup the scroll pane
     (.doLayout panel)

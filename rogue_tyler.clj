@@ -10,7 +10,7 @@
     (java.awt Frame Canvas Image FlowLayout)
     (java.awt.event WindowAdapter WindowEvent)))
 
-(load-file "./titania_map.clj")
+(load-file "./rogue_ui_utils.clj")
 (load-file "./data.json/json.clj")
 
 ; Read a file by path to using data.json
@@ -35,7 +35,7 @@
     (doto frame
       (.setSize 300 300)
       (.setLayout nil) ; (new FlowLayout)
-      (.add (titania-map/tile-chooser images 16 16 10 32 280 260))
+      (.add (rogue-ui-utils/image-chooser images 16 16 10 32 280 260))
       (.setVisible true)
       )))
 
