@@ -12,6 +12,11 @@
   (^boolean getState[])
   (^boolean setState[]))
 
+(def window-close-handler
+  (proxy [WindowAdapter] []
+    (windowClosing [e]
+      (.dispose (.getWindow e)))))
+
 ; Implements a panel which acts like a radio button, of which only one in a
 ; group can be selected at once.
 (defn image-tile [selector hover scale id image w h]

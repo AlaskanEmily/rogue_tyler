@@ -33,6 +33,7 @@
       (.setLocation 100 100)
       (.setLayout nil) ; (new FlowLayout)
       (.add (rogue-ui-utils/image-chooser images 16 16 10 32 280 260))
+      (.addWindowListener rogue-ui-utils/window-close-handler)
       (.setVisible true)
       )))
 
