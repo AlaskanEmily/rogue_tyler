@@ -9,8 +9,8 @@
     (java.awt Frame Canvas Image FlowLayout)
     (java.awt.event WindowAdapter WindowEvent)))
 
-(load-file "./rogue_ui_utils.clj")
-(load-file "./data.json/json.clj")
+(load "rogue_ui_utils")
+(load "data.json/json")
 
 ; Read a file by path to using data.json
 (defn read-file-to-json [path]
@@ -37,4 +37,3 @@
       (.setVisible true)
       )))
 
-(-main)
