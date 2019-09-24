@@ -2,14 +2,13 @@
   ^{:author "AlaskanEmily"
   :doc "Rogue Tyler map editor"}
   rogue-tyler
-  (:require [clojure.core.reducers :as reduce])
+  (:require [clojure.core.reducers :as reduce] rogue-ui-utils map-window)
   (:import
     (javax.imageio ImageIO)
     (java.io BufferedReader File FileReader InputStream InputStreamReader FileInputStream PushbackReader)
     (java.awt Frame Canvas Image FlowLayout)
     (java.awt.event WindowAdapter WindowEvent)))
 
-(load "rogue_ui_utils")
 (load "data.json/json")
 
 ; Read a file by path to using data.json
